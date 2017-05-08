@@ -2,7 +2,8 @@ package ua.sten.workout;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 public class WorkoutDetailFragment extends Fragment {
 
+    private static final String WORKOUT_ID = "workoutId";
     private long workoutId;
 
     public void setWorkoutId(long workoutId) {
@@ -21,12 +23,19 @@ public class WorkoutDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        if (savedInstanceState != null) {
+            workoutId = savedInstanceState.getLong(WORKOUT_ID, 0);
+        }
         return inflater.inflate(R.layout.fragment_workout_detail, container, false);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(WORKOUT_ID, (int) workoutId);
     }
 
     @Override
